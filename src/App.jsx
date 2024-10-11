@@ -4,24 +4,23 @@ import "./App.css";
 
 function App() {
   const [articles, setArticles] = useState([]);
-  const id = "0ba5fa4bbcd34337b55ed343c6686b7d";
-  const country = "us";
+  const apiKey = import.meta.env.VITE_NEWS_API_KEY;
+  const countryCode = import.meta.env.VITE_COUNTRY_CODE;
 
   useEffect(() => {
-
     fetch(
-      `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${id}`
+      `https://newsapi.org/v2/top-headlines?country=${countryCode}&apiKey=${apiKey}`
     )
       .then((response) => response.json())
       .then((data) => {
         setArticles(data.articles);
       })
       .catch((error) => console.error("Error fetching news:", error));
-  }, []);
+  }, [countryCode, apiKey]);
 
   return (
     <div className="App">
-      <div className="news">News Dashbord</div>
+      <div className="news">News Dashboard</div>
       <h1>📰 Top headlines</h1>
       <div className="news-container">
         {articles.map((article, index) => (
